@@ -7,6 +7,14 @@ body {
     flex-direction: column;
     align-items: center;
     height: 100dvh;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+header,
+main,
+footer {
+    max-width: 512px;
+    width: 100%;
 }
 
 kbd {
@@ -16,7 +24,14 @@ kbd {
 
 header {
     padding-bottom: 16px;
-    border-bottom: 2px solid black;
+    border-bottom: 2px solid rgb(231, 231, 233);
+    ;
+}
+
+#brand-container {
+    display: flex;
+    align-items: center;
+    gap: 16px;
 }
 
 #task-bar-container {
@@ -27,13 +42,19 @@ header {
 }
 
 #task-bar {
-    padding: 4px;
+    padding: 8px;
 }
 
 #task-list {
-
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    list-style-position: inside;
+    /* padding: 0; */
+    padding-bottom: 16px;
+    border-bottom: 2px solid rgb(231, 231, 233);
 }
 
-footer {
-
+.task-item {
+    word-break: break-all;
 }

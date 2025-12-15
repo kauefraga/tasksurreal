@@ -6,16 +6,24 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Tasksurreal</title>
     <link rel="stylesheet" href="theme.css" />
+    <link rel="icon" href="assets/unreal.webp" />
 </head>
 
 <body>
-    
+
     <header>
-        <h1>Acompanhador de tarefas surreal</h1>
+        <div id="brand-container">
+            <h1>Tasksurreal</h1>
+            <img src="assets/unreal.webp" alt="Ícone do ranque Surreal do Fortnite"
+                title="Ícone do ranque mais alto do Fortnite" width="40" height="40" />
+        </div>
 
         <div id="task-bar-container">
-            <label for="task-bar">Digite sua tarefa e pressione <kbd>enter</kbd></label>
-            <input id="task-bar" type="text" placeholder="Escovar os dentes, varrer a casa..." />
+            <label for="task-bar">
+                Digite sua tarefa e pressione <kbd title="Tecla para adicionar a tarefa na lista">enter</kbd>
+                ou <kbd title="Tecla para remover a última tarefa adicionada">backspace</kbd>
+            </label>
+            <input id="task-bar" type="text" placeholder="Escovar os dentes, varrer a casa..." maxlength="150" />
         </div>
     </header>
 
@@ -26,7 +34,7 @@
     </main>
 
     <footer>
-        &copy; 2025 Feito por Kauê Fraga Rodrigues
+        Construído por <a href="https://kauefraga.dev/" target="_blank">Kauê Fraga Rodrigues</a>.
     </footer>
 
     <script src="main.js"></script>

@@ -21,7 +21,29 @@ function addTask(task) {
     appendInTaskList(task);
 }
 
+function popInTaskList(task) {
+    const taskList = document.getElementById('task-list');
+
+    taskList.childNodes.forEach(child => {
+        if (child.textContent === task) {
+            taskList.removeChild(child);
+        }
+    });
+}
+
+/** Removes the latest task from array, local storage and task list in UI */
+function popTask() {
+    const task = tasks.pop();
+    localStorage.setItem('tasks', JSON.stringify(tasks));
+    popInTaskList(task);
+}
+
 taskBarInput.addEventListener('keydown', (event) => {
+    if (event.key === 'Backspace') {
+        popTask();
+        return;
+    }
+
     if (event.key !== 'Enter') {
         return;
     }
@@ -38,5 +60,11 @@ taskBarInput.addEventListener('keydown', (event) => {
         return;
     }
 
+    if (tasks.length === 0) {
+        const taskList = document.getElementById('task-list');
+        taskList.childNodes.forEach(child => taskList.removeChild(child));
+    }
+
     addTask(task);
+    event.target.value = '';
 });
