@@ -1,0 +1,39 @@
+:root {
+    --neutral-label: rgb(60, 60, 60);
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100dvh;
+}
+
+kbd {
+    background-color: rgb(220, 220, 220);
+    padding: 2px 4px;
+}
+
+header {
+    padding-bottom: 16px;
+    border-bottom: 2px solid black;
+}
+
+#task-bar-container {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    color: var(--neutral-label);
+}
+
+#task-bar {
+    padding: 4px;
+}
+
+#task-list {
+
+}
+
+footer {
+
+}
