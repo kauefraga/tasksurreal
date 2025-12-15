@@ -1,5 +1,7 @@
 const taskBarInput = document.getElementById('task-bar');
-const tasks = [];
+const tasks = getTasksFromLocalStorage();
+
+mountTaskList(tasks);
 
 function appendInTaskList(task) {
     const taskList = document.getElementById('task-list');
@@ -60,11 +62,30 @@ taskBarInput.addEventListener('keydown', (event) => {
         return;
     }
 
-    if (tasks.length === 0) {
-        const taskList = document.getElementById('task-list');
-        taskList.childNodes.forEach(child => taskList.removeChild(child));
+    const tutorialTaskItem = document.getElementById('tutorial-task-item');
+    if (tutorialTaskItem) {
+        tutorialTaskItem.remove();
     }
 
     addTask(task);
     event.target.value = '';
 });
+
+function mountTaskList(tasks) {
+    const tutorialTaskItem = document.getElementById('tutorial-task-item');
+    if (tutorialTaskItem && tasks.length > 0) {
+        tutorialTaskItem.remove();
+    }
+
+    for (const task of tasks) {
+        appendInTaskList(task);
+    }
+}
+
+function getTasksFromLocalStorage() {
+    if (!localStorage.getItem('tasks')) {
+        return [];
+    }
+
+    return JSON.parse(localStorage.getItem('tasks'));
+}
