@@ -52,6 +52,11 @@ taskBarInput.addEventListener('keydown', (event) => {
         return;
     }
 
+    if (task.length === 0) {
+        taskBarInput.dataset.error = true;
+        return;
+    }
+
     const repeatWithDelay = (fn, repetitions, delayInMs) => {
         if (repetitions === 0) {
             return;
@@ -75,6 +80,7 @@ taskBarInput.addEventListener('keydown', (event) => {
 
         setTimeout(() => {
             hint.style.visibility = 'hidden';
+            hint.textContent = 'Você só pode ter 10 tarefas para fazer';
         }, 5000);
 
         // I wrote this first, then I thought I could write it better ^^
@@ -94,11 +100,6 @@ taskBarInput.addEventListener('keydown', (event) => {
         return;
     }
 
-    // highlight que ele precisa escrever, borda do input
-    if (task.length === 0) {
-        return;
-    }
-
     const tutorialTaskItem = document.getElementById('tutorial-task-item');
     if (tutorialTaskItem) {
         tutorialTaskItem.remove();
@@ -106,6 +107,12 @@ taskBarInput.addEventListener('keydown', (event) => {
 
     addTask(task);
     event.target.value = '';
+});
+
+taskBarInput.addEventListener('input', () => {
+    if (taskBarInput.dataset.error) {
+        taskBarInput.dataset.error = false;
+    }
 });
 
 function mountTaskList(tasks) {
