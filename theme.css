@@ -1,5 +1,8 @@
 :root {
     --neutral-label: rgb(60, 60, 60);
+    --kbd-bg: rgb(220, 220, 220);
+    --error-hint: rgb(220, 20, 20);
+    --divider-color: rgb(231, 231, 233);
 }
 
 body {
@@ -18,13 +21,13 @@ footer {
 }
 
 kbd {
-    background-color: rgb(220, 220, 220);
+    background-color: var(--kbd-bg);
     padding: 2px 4px;
 }
 
 header {
     padding-bottom: 16px;
-    border-bottom: 2px solid rgb(231, 231, 233);
+    border-bottom: 2px solid var(--divider-color);
 }
 
 #brand-container {
@@ -42,6 +45,14 @@ header {
 
 #task-bar {
     padding: 8px;
+    border: 1px solid rgb(118, 118, 118);
+    border-radius: 2px;
+}
+
+#hint {
+    visibility: hidden;
+    margin: 0;
+    color: var(--error-hint);
 }
 
 #task-list {
@@ -51,7 +62,7 @@ header {
     list-style-position: inside;
     /* padding: 0; */
     padding-bottom: 16px;
-    border-bottom: 2px solid rgb(231, 231, 233);
+    border-bottom: 2px solid var(--divider-color);
 }
 
 .task-item {

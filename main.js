@@ -41,7 +41,9 @@ function popTask() {
 }
 
 taskBarInput.addEventListener('keydown', (event) => {
-    if (event.key === 'Backspace') {
+    const task = String(event.target.value);
+
+    if (event.key === 'Backspace' && task.length === 0) {
         popTask();
         return;
     }
@@ -50,10 +52,45 @@ taskBarInput.addEventListener('keydown', (event) => {
         return;
     }
 
-    const task = String(event.target.value);
+    const repeatWithDelay = (fn, repetitions, delayInMs) => {
+        if (repetitions === 0) {
+            return;
+        }
 
-    // hint que ele não pode ter mais de 10 tarefas para fazer
+        setTimeout(fn, delayInMs * repetitions);
+
+        return repeatWithDelay(fn, repetitions - 1, delayInMs);
+    };
+
+    // BUSINESS RULE: user should not have more than 10 tasks
     if (tasks.length >= 10) {
+        const hint = document.getElementById('hint');
+        hint.style.visibility = 'visible';
+
+        // I think that making this function async would improve the usability of it
+        // As it is, you need to calculate that 3 times 1000 will result in 3 seconds to correctly set the next timeout to 5 seconds, just so it runs 2 seconds after these repetitions occur
+        repeatWithDelay(() => {
+            hint.textContent += '.';
+        }, 3, 1000);
+
+        setTimeout(() => {
+            hint.style.visibility = 'hidden';
+        }, 5000);
+
+        // I wrote this first, then I thought I could write it better ^^
+        // setTimeout(() => {
+        //     hint.textContent += '.';
+        //     setTimeout(() => {
+        //         hint.textContent += '.';
+        //         setTimeout(() => {
+        //             hint.textContent += '.';
+        //             setTimeout(() => {
+        //                 hint.style.visibility = 'hidden';
+        //             }, 2000);
+        //         }, 1000);
+        //     }, 1000);
+        // }, 1000);
+
         return;
     }
 
