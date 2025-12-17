@@ -69,6 +69,7 @@ kbd {
 #task-list {
     display: flex;
     flex-direction: column;
+    list-style-type: disc;
     list-style-position: inside;
     margin: 0;
     padding-bottom: 16px;
@@ -78,13 +79,30 @@ kbd {
     word-break: break-all;
     padding: 20px 0;
     border-bottom: 1px solid var(--divider-color);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+}
+
+.task-item::before {
+    content: '';
+    background: #000000;
+    width: 6px;
+    height: 6px;
+    border-radius: 100%;
 }
 
 .task-item:last-child {
     border-bottom: none;
 }
 
-#faq {
+.task-content {
+    flex: 1;
+    margin: 0;
+}
+
+.task-content #faq {
     text-wrap: pretty;
 }
 

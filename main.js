@@ -3,95 +3,109 @@ const tasks = getTasksFromLocalStorage();
 
 mountTaskList(tasks);
 
-function appendInTaskList(task, index) {
+function appendInTaskList(task) {
     const taskList = document.getElementById('task-list');
 
-    const listItem = document.createElement('li');
-    listItem.textContent = task;
-    listItem.classList.add('task-item');
+    const taskItem = document.createElement('li');
+    taskItem.classList.add('task-item');
+    taskItem.id = `task-item-${task.id}`;
 
-    listItem.id = `task-item-${index}`;
-
+    const taskContent = document.createElement('p');
+    taskContent.classList.add('task-content');
+    taskContent.textContent = task.content;
     let clickCounter = 0;
-
-    listItem.addEventListener('click', () => {
+    taskContent.addEventListener('click', () => {
         clickCounter += 1;
         setTimeout(() => {
             clickCounter = 0;
         }, 1000);
 
         if (clickCounter >= 2) {
-            listItem.contentEditable = 'plaintext-only';
-            listItem.focus();
+            taskContent.contentEditable = 'plaintext-only';
+            taskContent.focus();
         }
     });
-
-    listItem.addEventListener('keydown', (event) => {
+    taskContent.addEventListener('keydown', (event) => {
         if (event.key === 'Enter') {
-            listItem.contentEditable = 'false';
+            taskContent.contentEditable = 'false';
 
-            if (listItem.textContent.trim() === '') {
-                removeTask(listItem.id);
+            if (taskContent.textContent.trim() === '') {
+                removeTask(task.id);
                 return;
             }
 
-            updateTask(listItem.id, listItem.textContent);
+            updateTask({
+                id: task.id,
+                content: taskContent.textContent,
+            });
         }
     });
+    taskItem.appendChild(taskContent);
 
-    taskList.appendChild(listItem);
+    const removeButton = document.createElement('button');
+    removeButton.classList.add('task-remove-button');
+    removeButton.type = 'button';
+    removeButton.textContent = 'feito';
+    removeButton.addEventListener('click', () => {
+        removeTask(task.id);
+    });
+    taskItem.appendChild(removeButton);
+
+    taskList.appendChild(taskItem);
 }
 
 /** Adds to array, local storage and task list in UI */
-function addTask(task) {
+function addTask(taskContent) {
+    const task = {
+        id: tasks.length,
+        content: taskContent,
+    };
+
     tasks.push(task);
     localStorage.setItem('tasks', JSON.stringify(tasks));
-    appendInTaskList(task, tasks.length - 1);
+    appendInTaskList(task);
 }
 
-function popInTaskList(task) {
+function popInTaskList(id) {
     const taskList = document.getElementById('task-list');
-
-    taskList.childNodes.forEach(child => {
-        if (child.textContent === task) {
-            taskList.removeChild(child);
-        }
-    });
+    taskList.removeChild(document.getElementById(`task-item-${id}`));
 }
 
 /** Removes the last inserted task from array, local storage and task list in UI */
 function popTask() {
     const task = tasks.pop();
     localStorage.setItem('tasks', JSON.stringify(tasks));
-    popInTaskList(task);
+    popInTaskList(task.id);
 }
 
 
-/** Removes a task by its HTML id from array, local storage and task list in UI */
-function removeTask(htmlId) {
-    const id = Number(htmlId.split('-')[2]);
-
-    const filteredTasks = tasks.filter((_, index) => index !== id);
-    localStorage.setItem('tasks', JSON.stringify(filteredTasks));
+/** Removes a task by its id from array, local storage and task list in UI */
+function removeTask(id) {
+    tasks.splice(id, 1);
+    for (const [index, task] of tasks.entries()) {
+        tasks[index] = {
+            id: index,
+            content: task.content,
+        };
+    }
+    localStorage.setItem('tasks', JSON.stringify(tasks));
 
     const taskList = document.getElementById('task-list');
-    while (taskList.firstChild) {
-        taskList.removeChild(taskList.firstChild);
-    }
-
-    mountTaskList(filteredTasks);
+    taskList.removeChild(document.getElementById(`task-item-${id}`));
 }
 
-function updateTask(id, taskContent) {
-    const index = Number(id.split('-')[2]);
-    tasks[index] = taskContent;
+function updateTask(task) {
+    tasks[task.id] = {
+        id: task.id,
+        content: task.content,
+    };
     localStorage.setItem('tasks', JSON.stringify(tasks));
 }
 
 taskBarInput.addEventListener('keydown', (event) => {
-    const task = String(event.target.value);
+    const newTask = String(event.target.value);
 
-    if (event.key === 'Backspace' && task.length === 0) {
+    if (event.key === 'Backspace' && newTask.length === 0) {
         popTask();
         return;
     }
@@ -100,7 +114,7 @@ taskBarInput.addEventListener('keydown', (event) => {
         return;
     }
 
-    if (task.length === 0) {
+    if (newTask.length === 0) {
         taskBarInput.dataset.error = true;
         return;
     }
@@ -153,7 +167,7 @@ taskBarInput.addEventListener('keydown', (event) => {
         tutorialTaskItem.remove();
     }
 
-    addTask(task);
+    addTask(newTask);
     event.target.value = '';
 });
 
@@ -169,8 +183,8 @@ function mountTaskList(tasks) {
         tutorialTaskItem.remove();
     }
 
-    for (const [index, task] of tasks.entries()) {
-        appendInTaskList(task, index);
+    for (const task of tasks) {
+        appendInTaskList(task);
     }
 }
 
