@@ -3,15 +3,41 @@ const tasks = getTasksFromLocalStorage();
 
 mountTaskList(tasks);
 
-function appendInTaskList(task) {
+function appendInTaskList(task, index) {
     const taskList = document.getElementById('task-list');
 
     const listItem = document.createElement('li');
     listItem.textContent = task;
     listItem.classList.add('task-item');
 
-    const taskId = tasks.length - 1;
-    listItem.id = `task-item-${taskId}`;
+    listItem.id = `task-item-${index}`;
+
+    let clickCounter = 0;
+
+    listItem.addEventListener('click', () => {
+        clickCounter += 1;
+        setTimeout(() => {
+            clickCounter = 0;
+        }, 1000);
+
+        if (clickCounter >= 2) {
+            listItem.contentEditable = 'plaintext-only';
+            listItem.focus();
+        }
+    });
+
+    listItem.addEventListener('keydown', (event) => {
+        if (event.key === 'Enter') {
+            listItem.contentEditable = 'false';
+
+            if (listItem.textContent.trim() === '') {
+                removeTask(listItem.id);
+                return;
+            }
+
+            updateTask(listItem.id, listItem.textContent);
+        }
+    });
 
     taskList.appendChild(listItem);
 }
@@ -20,7 +46,7 @@ function appendInTaskList(task) {
 function addTask(task) {
     tasks.push(task);
     localStorage.setItem('tasks', JSON.stringify(tasks));
-    appendInTaskList(task);
+    appendInTaskList(task, tasks.length - 1);
 }
 
 function popInTaskList(task) {
@@ -33,11 +59,33 @@ function popInTaskList(task) {
     });
 }
 
-/** Removes the latest task from array, local storage and task list in UI */
+/** Removes the last inserted task from array, local storage and task list in UI */
 function popTask() {
     const task = tasks.pop();
     localStorage.setItem('tasks', JSON.stringify(tasks));
     popInTaskList(task);
+}
+
+
+/** Removes a task by its HTML id from array, local storage and task list in UI */
+function removeTask(htmlId) {
+    const id = Number(htmlId.split('-')[2]);
+
+    const filteredTasks = tasks.filter((_, index) => index !== id);
+    localStorage.setItem('tasks', JSON.stringify(filteredTasks));
+
+    const taskList = document.getElementById('task-list');
+    while (taskList.firstChild) {
+        taskList.removeChild(taskList.firstChild);
+    }
+
+    mountTaskList(filteredTasks);
+}
+
+function updateTask(id, taskContent) {
+    const index = Number(id.split('-')[2]);
+    tasks[index] = taskContent;
+    localStorage.setItem('tasks', JSON.stringify(tasks));
 }
 
 taskBarInput.addEventListener('keydown', (event) => {
@@ -121,8 +169,8 @@ function mountTaskList(tasks) {
         tutorialTaskItem.remove();
     }
 
-    for (const task of tasks) {
-        appendInTaskList(task);
+    for (const [index, task] of tasks.entries()) {
+        appendInTaskList(task, index);
     }
 }
 
