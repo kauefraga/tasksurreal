@@ -1,159 +1,133 @@
+import { createRemoveButtonElement, createTaskItem } from "./elements.js";
+import { makeHintAppear } from "./utils.js";
+
 const taskBarInput = document.getElementById('task-bar');
 const tasks = getTasksFromLocalStorage();
 
 mountTaskList(tasks);
 
-function appendInTaskList(task, index) {
+
+function editTaskContent(event, taskContent, task) {
+    if (event.key !== "Enter") return;
+    const textContent = taskContent.textContent;
+
+    if (textContent.trim() == "") {
+        removeTask(task.id)
+        return;
+    }
+
+    updateTask({
+        id: task.id,
+        content: taskContent.textContent,
+    });
+}
+
+
+/**
+ * After extracting element creation into separate files,
+ * this function became more readable and easier to maintain.
+ * This approach should be reused elsewhere to improve clarity
+ * and better follow clean code practices.
+ */
+
+function appendInTaskList(task) {
     const taskList = document.getElementById('task-list');
 
-    const listItem = document.createElement('li');
-    listItem.textContent = task;
-    listItem.classList.add('task-item');
+    const {taskItem, taskContent} = createTaskItem(task);
 
-    listItem.id = `task-item-${index}`;
+    taskContent.addEventListener('keydown', (event) => editTaskContent(event, taskContent, task));
+    taskItem.appendChild(taskContent);
 
-    let clickCounter = 0;
+    const removeButton = createRemoveButtonElement()
+    removeButton.addEventListener("click", () => {
+        removeTask(task.id)
+    })
 
-    listItem.addEventListener('click', () => {
-        clickCounter += 1;
-        setTimeout(() => {
-            clickCounter = 0;
-        }, 1000);
-
-        if (clickCounter >= 2) {
-            listItem.contentEditable = 'plaintext-only';
-            listItem.focus();
-        }
-    });
-
-    listItem.addEventListener('keydown', (event) => {
-        if (event.key === 'Enter') {
-            listItem.contentEditable = 'false';
-
-            if (listItem.textContent.trim() === '') {
-                removeTask(listItem.id);
-                return;
-            }
-
-            updateTask(listItem.id, listItem.textContent);
-        }
-    });
-
-    taskList.appendChild(listItem);
+    taskItem.appendChild(removeButton);
+    taskList.appendChild(taskItem);
 }
 
 /** Adds to array, local storage and task list in UI */
-function addTask(task) {
+function addTask(taskContent) {
+    const task = {
+        id: tasks.length,
+        content: taskContent,
+    };
+
     tasks.push(task);
     localStorage.setItem('tasks', JSON.stringify(tasks));
-    appendInTaskList(task, tasks.length - 1);
+    appendInTaskList(task);
 }
 
-function popInTaskList(task) {
-    const taskList = document.getElementById('task-list');
-
-    taskList.childNodes.forEach(child => {
-        if (child.textContent === task) {
-            taskList.removeChild(child);
-        }
-    });
-}
 
 /** Removes the last inserted task from array, local storage and task list in UI */
+/**
+ * I'll put popinTaskList into this function, cause the project don't need this separation logic (well, since we're using just JavaScript, we dont need follow practices of very clean architectures. Just some practices of Clean Code, and refactor this function to pop in Task and in LocalStorage it's good for my eyes)
+ * 
+ */
 function popTask() {
     const task = tasks.pop();
     localStorage.setItem('tasks', JSON.stringify(tasks));
-    popInTaskList(task);
+
+    const taskList = document.getElementById("task-list")
+    taskList.removeChild(
+        document.getElementById(`task-item-${task.id}`)
+    )
 }
 
 
-/** Removes a task by its HTML id from array, local storage and task list in UI */
-function removeTask(htmlId) {
-    const id = Number(htmlId.split('-')[2]);
-
-    const filteredTasks = tasks.filter((_, index) => index !== id);
-    localStorage.setItem('tasks', JSON.stringify(filteredTasks));
+/** Removes a task by its id from array, local storage and task list in UI */
+function removeTask(id) {
+    tasks.splice(id, 1);
+    for (const [index, task] of tasks.entries()) {
+        tasks[index] = {
+            id: index,
+            content: task.content,
+        };
+    }
+    localStorage.setItem('tasks', JSON.stringify(tasks));
 
     const taskList = document.getElementById('task-list');
-    while (taskList.firstChild) {
-        taskList.removeChild(taskList.firstChild);
-    }
-
-    mountTaskList(filteredTasks);
+    taskList.removeChild(document.getElementById(`task-item-${id}`));
 }
 
-function updateTask(id, taskContent) {
-    const index = Number(id.split('-')[2]);
-    tasks[index] = taskContent;
+function setDataSetError(taskLength) {
+    if (taskLength === 0) {
+        taskBarInput.dataset.error
+
+        return false;
+    }
+
+    return true;
+}
+
+function updateTask(task) {
+    tasks[task.id] = {
+        id: task.id,
+        content: task.content,
+    };
     localStorage.setItem('tasks', JSON.stringify(tasks));
 }
 
 taskBarInput.addEventListener('keydown', (event) => {
-    const task = String(event.target.value);
+    const newTask = String(event.target.value);
 
-    if (event.key === 'Backspace' && task.length === 0) {
+    if (event.key === 'Backspace' && newTask.length === 0) {
         popTask();
         return;
     }
 
-    if (event.key !== 'Enter') {
-        return;
-    }
+    if (event.key !== 'Enter') return;
 
-    if (task.length === 0) {
-        taskBarInput.dataset.error = true;
-        return;
-    }
-
-    const repeatWithDelay = (fn, repetitions, delayInMs) => {
-        if (repetitions === 0) {
-            return;
-        }
-
-        setTimeout(fn, delayInMs * repetitions);
-
-        return repeatWithDelay(fn, repetitions - 1, delayInMs);
-    };
-
-    // BUSINESS RULE: user should not have more than 10 tasks
-    if (tasks.length >= 10) {
-        const hint = document.getElementById('hint');
-        hint.style.visibility = 'visible';
-
-        // I think that making this function async would improve the usability of it
-        // As it is, you need to calculate that 3 times 1000 will result in 3 seconds to correctly set the next timeout to 5 seconds, just so it runs 2 seconds after these repetitions occur
-        repeatWithDelay(() => {
-            hint.textContent += '.';
-        }, 3, 1000);
-
-        setTimeout(() => {
-            hint.style.visibility = 'hidden';
-            hint.textContent = 'Você só pode ter 10 tarefas para fazer';
-        }, 5000);
-
-        // I wrote this first, then I thought I could write it better ^^
-        // setTimeout(() => {
-        //     hint.textContent += '.';
-        //     setTimeout(() => {
-        //         hint.textContent += '.';
-        //         setTimeout(() => {
-        //             hint.textContent += '.';
-        //             setTimeout(() => {
-        //                 hint.style.visibility = 'hidden';
-        //             }, 2000);
-        //         }, 1000);
-        //     }, 1000);
-        // }, 1000);
-
-        return;
-    }
+    if (!setDataSetError(newTask.length)) return;
+    if (!makeHintAppear(tasks)) return;
 
     const tutorialTaskItem = document.getElementById('tutorial-task-item');
     if (tutorialTaskItem) {
         tutorialTaskItem.remove();
     }
 
-    addTask(task);
+    addTask(newTask);
     event.target.value = '';
 });
 
@@ -163,14 +137,16 @@ taskBarInput.addEventListener('input', () => {
     }
 });
 
+
+
 function mountTaskList(tasks) {
     const tutorialTaskItem = document.getElementById('tutorial-task-item');
     if (tutorialTaskItem && tasks.length > 0) {
         tutorialTaskItem.remove();
     }
 
-    for (const [index, task] of tasks.entries()) {
-        appendInTaskList(task, index);
+    for (const task of tasks) {
+        appendInTaskList(task);
     }
 }
 
