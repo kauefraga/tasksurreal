@@ -13,17 +13,12 @@ function appendInTaskList(task) {
     const taskContent = document.createElement('p');
     taskContent.classList.add('task-content');
     taskContent.textContent = task.content;
-    let clickCounter = 0;
-    taskContent.addEventListener('click', () => {
-        clickCounter += 1;
-        setTimeout(() => {
-            clickCounter = 0;
-        }, 1000);
-
-        if (clickCounter >= 2) {
-            taskContent.contentEditable = 'plaintext-only';
-            taskContent.focus();
-        }
+    taskContent.addEventListener('dblclick', () => {
+        taskContent.contentEditable = 'plaintext-only';
+        taskContent.focus();
+    });
+    taskContent.addEventListener('focusout', () => {
+        taskContent.contentEditable = 'false';
     });
     taskContent.addEventListener('keydown', (event) => {
         if (event.key === 'Enter') {
