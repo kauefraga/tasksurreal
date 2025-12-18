@@ -1,5 +1,5 @@
-import { createRemoveButtonElement, createTaskItem } from "./elements.js";
-import { makeHintAppear } from "./utils.js";
+import { createRemoveButtonElement, createTaskItem } from './elements.js';
+import { makeHintAppear } from './utils.js';
 
 const taskBarInput = document.getElementById('task-bar');
 const tasks = getTasksFromLocalStorage();
@@ -7,11 +7,11 @@ const tasks = getTasksFromLocalStorage();
 mountTaskList(tasks);
 
 function editTaskContent(event, taskContent, task) {
-    if (event.key !== "Enter") return;
-    const textContent = taskContent.textContent;
+    if (event.key !== 'Enter') return;
 
-    if (textContent.trim() == "") {
-        removeTask(task.id)
+    const textContent = taskContent.textContent;
+    if (textContent.trim() == '') {
+        removeTask(task.id);
         return;
     }
 
@@ -35,8 +35,8 @@ function appendInTaskList(task) {
     taskContent.addEventListener('keydown', (event) => editTaskContent(event, taskContent, task));
     taskItem.appendChild(taskContent);
 
-    const removeButton = createRemoveButtonElement()
-    removeButton.addEventListener("click", () => {
+    const removeButton = createRemoveButtonElement();
+    removeButton.addEventListener('click', () => {
         removeTask(task.id);
     });
 
@@ -65,7 +65,7 @@ function popTask() {
     const task = tasks.pop();
     localStorage.setItem('tasks', JSON.stringify(tasks));
 
-    const taskList = document.getElementById("task-list");
+    const taskList = document.getElementById('task-list');
     taskList.removeChild(document.getElementById(task.id));
 }
 
@@ -81,7 +81,7 @@ function removeTask(id) {
 
 function setDataSetError(taskLength) {
     if (taskLength === 0) {
-        taskBarInput.dataset.error
+        taskBarInput.dataset.error;
 
         return false;
     }
@@ -89,7 +89,7 @@ function setDataSetError(taskLength) {
     return true;
 }
 
-function updateTask(task) {
+function updateTask(newTask) {
     const index = tasks.findIndex((task) => task.id === newTask.id);
     tasks[index] = {
         id: newTask.id,

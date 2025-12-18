@@ -4,12 +4,12 @@
  */
 
 function turnTaskContentEditable() {
-    this.contentEditable = "plaintext-only"
-    this.focus()
+    this.contentEditable = 'plaintext-only';
+    this.focus();
 }
 
 function onTaskContentFocusOut() {
-    this.removeAttribute("contenteditable");
+    this.removeAttribute('contenteditable');
 }
 
 export function createRemoveButtonElement() {
@@ -17,22 +17,22 @@ export function createRemoveButtonElement() {
     removeButton.classList.add('task-remove-button');
 
     removeButton.type = 'button';
-    removeButton.textContent = 'feito';
+    removeButton.textContent = 'remover';
 
-    return removeButton
+    return removeButton;
 }
 
 export function createTaskItem(task) {
     const taskItem = document.createElement('li');
     taskItem.classList.add('task-item');
-    taskItem.id = `task-item-${task.id}`;
+    taskItem.id = task.id;
 
     const taskContent = document.createElement('p');
     taskContent.classList.add('task-content');
     taskContent.textContent = task.content;
 
-    taskContent.addEventListener("dblclick", turnTaskContentEditable)
-    taskContent.addEventListener("focusout", onTaskContentFocusOut)
+    taskContent.addEventListener('dblclick', turnTaskContentEditable);
+    taskContent.addEventListener('focusout', onTaskContentFocusOut);
 
-    return {taskItem, taskContent}
+    return { taskItem, taskContent };
 }

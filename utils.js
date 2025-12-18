@@ -26,4 +26,4 @@ function makeHintAppear(tasks) {
     return false;
 }
 
-export {makeHintAppear}
+export { makeHintAppear };
