@@ -8,7 +8,7 @@ function appendInTaskList(task) {
 
     const taskItem = document.createElement('li');
     taskItem.classList.add('task-item');
-    taskItem.id = `task-item-${task.id}`;
+    taskItem.id = task.id;
 
     const taskContent = document.createElement('p');
     taskContent.classList.add('task-content');
@@ -45,7 +45,7 @@ function appendInTaskList(task) {
     const removeButton = document.createElement('button');
     removeButton.classList.add('task-remove-button');
     removeButton.type = 'button';
-    removeButton.textContent = 'feito';
+    removeButton.textContent = 'remover';
     removeButton.addEventListener('click', () => {
         removeTask(task.id);
     });
@@ -57,7 +57,7 @@ function appendInTaskList(task) {
 /** Adds to array, local storage and task list in UI */
 function addTask(taskContent) {
     const task = {
-        id: tasks.length,
+        id: `task-${Math.floor(Math.random() * 1000)}`,
         content: taskContent,
     };
 
@@ -68,7 +68,7 @@ function addTask(taskContent) {
 
 function popInTaskList(id) {
     const taskList = document.getElementById('task-list');
-    taskList.removeChild(document.getElementById(`task-item-${id}`));
+    taskList.removeChild(document.getElementById(id));
 }
 
 /** Removes the last inserted task from array, local storage and task list in UI */
@@ -81,23 +81,19 @@ function popTask() {
 
 /** Removes a task by its id from array, local storage and task list in UI */
 function removeTask(id) {
-    tasks.splice(id, 1);
-    for (const [index, task] of tasks.entries()) {
-        tasks[index] = {
-            id: index,
-            content: task.content,
-        };
-    }
+    const index = tasks.findIndex((task) => task.id === id);
+    tasks.splice(index, 1);
     localStorage.setItem('tasks', JSON.stringify(tasks));
 
     const taskList = document.getElementById('task-list');
-    taskList.removeChild(document.getElementById(`task-item-${id}`));
+    taskList.removeChild(document.getElementById(id));
 }
 
-function updateTask(task) {
-    tasks[task.id] = {
-        id: task.id,
-        content: task.content,
+function updateTask(newTask) {
+    const index = tasks.findIndex((task) => task.id === newTask.id);
+    tasks[index] = {
+        id: newTask.id,
+        content: newTask.content,
     };
     localStorage.setItem('tasks', JSON.stringify(tasks));
 }
