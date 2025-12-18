@@ -6,7 +6,6 @@ const tasks = getTasksFromLocalStorage();
 
 mountTaskList(tasks);
 
-
 function editTaskContent(event, taskContent, task) {
     if (event.key !== "Enter") return;
     const textContent = taskContent.textContent;
@@ -22,26 +21,24 @@ function editTaskContent(event, taskContent, task) {
     });
 }
 
-
 /**
  * After extracting element creation into separate files,
  * this function became more readable and easier to maintain.
  * This approach should be reused elsewhere to improve clarity
  * and better follow clean code practices.
  */
-
 function appendInTaskList(task) {
     const taskList = document.getElementById('task-list');
 
-    const {taskItem, taskContent} = createTaskItem(task);
+    const { taskItem, taskContent } = createTaskItem(task);
 
     taskContent.addEventListener('keydown', (event) => editTaskContent(event, taskContent, task));
     taskItem.appendChild(taskContent);
 
     const removeButton = createRemoveButtonElement()
     removeButton.addEventListener("click", () => {
-        removeTask(task.id)
-    })
+        removeTask(task.id);
+    });
 
     taskItem.appendChild(removeButton);
     taskList.appendChild(taskItem);
@@ -50,7 +47,7 @@ function appendInTaskList(task) {
 /** Adds to array, local storage and task list in UI */
 function addTask(taskContent) {
     const task = {
-        id: tasks.length,
+        id: `task-${Math.floor(Math.random() * 1000)}`,
         content: taskContent,
     };
 
@@ -59,9 +56,8 @@ function addTask(taskContent) {
     appendInTaskList(task);
 }
 
-
-/** Removes the last inserted task from array, local storage and task list in UI */
 /**
+ * Removes the last inserted task from array, local storage and task list in UI 
  * I'll put popinTaskList into this function, cause the project don't need this separation logic (well, since we're using just JavaScript, we dont need follow practices of very clean architectures. Just some practices of Clean Code, and refactor this function to pop in Task and in LocalStorage it's good for my eyes)
  * 
  */
@@ -69,26 +65,18 @@ function popTask() {
     const task = tasks.pop();
     localStorage.setItem('tasks', JSON.stringify(tasks));
 
-    const taskList = document.getElementById("task-list")
-    taskList.removeChild(
-        document.getElementById(`task-item-${task.id}`)
-    )
+    const taskList = document.getElementById("task-list");
+    taskList.removeChild(document.getElementById(task.id));
 }
-
 
 /** Removes a task by its id from array, local storage and task list in UI */
 function removeTask(id) {
-    tasks.splice(id, 1);
-    for (const [index, task] of tasks.entries()) {
-        tasks[index] = {
-            id: index,
-            content: task.content,
-        };
-    }
+    const index = tasks.findIndex((task) => task.id === id);
+    tasks.splice(index, 1);
     localStorage.setItem('tasks', JSON.stringify(tasks));
 
     const taskList = document.getElementById('task-list');
-    taskList.removeChild(document.getElementById(`task-item-${id}`));
+    taskList.removeChild(document.getElementById(id));
 }
 
 function setDataSetError(taskLength) {
@@ -102,9 +90,10 @@ function setDataSetError(taskLength) {
 }
 
 function updateTask(task) {
-    tasks[task.id] = {
-        id: task.id,
-        content: task.content,
+    const index = tasks.findIndex((task) => task.id === newTask.id);
+    tasks[index] = {
+        id: newTask.id,
+        content: newTask.content,
     };
     localStorage.setItem('tasks', JSON.stringify(tasks));
 }
@@ -136,8 +125,6 @@ taskBarInput.addEventListener('input', () => {
         taskBarInput.dataset.error = false;
     }
 });
-
-
 
 function mountTaskList(tasks) {
     const tutorialTaskItem = document.getElementById('tutorial-task-item');
