@@ -49,6 +49,12 @@ kbd {
     color: var(--neutral-label);
 }
 
+#rank-container {
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 5;
+}
+
 #task-bar {
     padding: 8px;
     border: 1px solid rgb(118, 118, 118);

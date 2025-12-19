@@ -10,6 +10,7 @@ const repeatWithDelay = (fn, repetitions, delayInMs) => {
 
 function makeHintAppear(tasks) {
     if (tasks.length < 10) return true;
+    console.log(tasks.length)
 
     const hint = document.getElementById('hint');
     hint.style.visibility = 'visible';

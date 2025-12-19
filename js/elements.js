@@ -1,3 +1,7 @@
+/*
+    File write by shirorsrs (discord) for the first time.
+*/
+
 /**
  * This file currently contains the creation of Remove Button and Task Item, but may contain any other element.
  * I've created this because it's more readable for someone that will read codebase
