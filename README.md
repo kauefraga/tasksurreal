@@ -1,8 +1,10 @@
 # Tasksurreal <img src="assets/unreal.webp" alt="Ícone do ranque Surreal do Fortnite" width="32" height="32" />
 
-Um gerenciador de tarefas mínimo, livre de distrações visuais e com foco na sua produtividade. Também chamado de to-do list.
+Um gerenciador de tarefas mínimo, livre de distrações visuais e com foco na sua produtividade. 
 
-![Página do Tasksurreal no estado inicial](docs/showcase.png)
+Tasksurreal oferece uma to-do list que te incentiva a realizar seus afazeres por meio de um sistema de pontuação e te obriga a priorizar as atividades com uma limitação de tarefas.
+
+![Página do Tasksurreal no estado inicial](docs/showcase-latest.png)
 
 ## Por que usar o Tasksurreal?
 
@@ -11,12 +13,22 @@ Um gerenciador de tarefas mínimo, livre de distrações visuais e com foco na s
 - Local: nenhuma informação sai do seu dispositivo.
 - Produtivo: priorize 10 tarefas para fazer, nenhuma a mais.
 
+## Sistema de ranque
+
+Conclua tarefas e acumule pontos para subir de ranque.
+
+> Cada tarefa concluída acrescenta um ponto
+
+1. 0 pontos = sem ranque
+2. 10 pontos = iniciante
+3. 50 pontos = avançado
+4. 100 pontos = surreal
+
 ## O que ainda está por vir?
 
 - Efeitos sonoros opcionais
 - Tema escuro 
 - Versão em inglês
-- Ranque por tarefas concluídas
 
 ## Motivação
 
