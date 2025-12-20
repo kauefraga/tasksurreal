@@ -3,10 +3,9 @@ import { addTask, popTask, setDataSetError, getTasksFromLocalStorage } from './t
 
 const taskBarInput = document.getElementById('task-bar');
 
-
 // refactored by shirorsrs (discord)
 export function configTaskBarForInputs() {
-        taskBarInput.addEventListener('keydown', (event) => {
+    taskBarInput.addEventListener('keydown', (event) => {
         const newTask = String(event.target.value);
 
         if (event.key === 'Backspace' && newTask.length === 0) {
@@ -16,8 +15,8 @@ export function configTaskBarForInputs() {
 
         if (event.key !== 'Enter') return;
 
-        if (!setDataSetError(newTask.length)) return;
-        if (!makeHintAppear(getTasksFromLocalStorage())) return;
+        if (setDataSetError(newTask.length)) return;
+        if (makeHintAppear(getTasksFromLocalStorage())) return;
 
         const tutorialTaskItem = document.getElementById('tutorial-task-item');
         if (tutorialTaskItem) {

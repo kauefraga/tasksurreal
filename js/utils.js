@@ -9,7 +9,7 @@ const repeatWithDelay = (fn, repetitions, delayInMs) => {
 };
 
 function makeHintAppear(tasks) {
-    if (tasks.length < 10) return true;
+    if (tasks.length < 10) return false;
 
     const hint = document.getElementById('hint');
     hint.style.visibility = 'visible';
@@ -23,7 +23,7 @@ function makeHintAppear(tasks) {
         hint.textContent = 'Você só pode ter 10 tarefas para fazer';
     }, 5000);
 
-    return false;
+    return true;
 }
 
 export { makeHintAppear };

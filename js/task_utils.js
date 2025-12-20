@@ -75,12 +75,12 @@ function removeTask(id) {
 
 function setDataSetError(taskLength) {
     if (taskLength === 0) {
-        taskBarInput.dataset.error;
+        taskBarInput.dataset.error = true;
 
-        return false;
+        return true;
     }
 
-    return true;
+    return false;
 }
 
 function updateTask(newTask) {
@@ -92,4 +92,12 @@ function updateTask(newTask) {
     localStorage.setItem('tasks', JSON.stringify(tasks));
 }
 
-export {appendInTaskList, addTask, popTask, removeTask, updateTask, setDataSetError, getTasksFromLocalStorage}
+export {
+    appendInTaskList,
+    addTask,
+    popTask,
+    removeTask,
+    updateTask,
+    setDataSetError,
+    getTasksFromLocalStorage,
+};
