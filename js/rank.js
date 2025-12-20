@@ -3,21 +3,21 @@
 */
 
 const ranks = new Map([
-  [10, "Iniciante",],
-  [50, "Avançado"],
-  [100, "Surreal"]  
+    [10, "Iniciante",],
+    [50, "Avançado"],
+    [100, "Surreal"]
 ]);
 
 const assets = new Map([
-    ["Iniciante", "assets/golden.png"],
-    ["Avançado", "assets/diamond.png"],
+    ["Iniciante", "assets/golden.webp"],
+    ["Avançado", "assets/diamond.webp"],
     ["Surreal", "assets/unreal.webp"]
 ])
 
 function setInitialRank() {
     const rank = localStorage.getItem("rank");
 
-    if (!rank){
+    if (!rank) {
         const initialRank = {
             "rank": "Nenhum",
             "points": 0
@@ -36,7 +36,7 @@ function setInitialImage() {
     rankAsset.setAttribute("src", assetImage)
 }
 
-function setRankText (newRank = null) {
+function setRankText(newRank = null) {
     const rankText = document.getElementById("rank-text");
     const rank = newRank ?? JSON.parse(localStorage.getItem("rank"))
 
@@ -54,7 +54,7 @@ function updateRankImage(rank) {
 
 function updateRank(points) {
     const lastUpdatedRank = JSON.parse(localStorage.getItem("rank"));
-    
+
     const newPoints = lastUpdatedRank.points + points
     const newRank = ranks.get(newPoints) ?? lastUpdatedRank.rank
 
