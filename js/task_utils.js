@@ -12,33 +12,61 @@ function getTasksFromLocalStorage() {
 }
 const tasks = getTasksFromLocalStorage();
 
-function editTaskContent(event, taskContent, task) {
+function updateTask(newTask) {
+    const index = tasks.findIndex((task) => task.id === newTask.id);
+    tasks[index] = {
+        id: newTask.id,
+        content: newTask.content,
+    };
+    localStorage.setItem('tasks', JSON.stringify(tasks));
+}
+
+function editTask(event, taskContent, taskInput, task) {
     if (event.key !== 'Enter') return;
 
-    const textContent = taskContent.textContent;
-    if (textContent.trim() == '') {
+    const content = taskInput.value;
+    if (content.trim() == '') {
         removeTask(task.id);
         return;
     }
 
     updateTask({
         id: task.id,
-        content: taskContent.textContent,
+        content,
     });
+
+    taskContent.textContent = content;
+    taskInput.replaceWith(taskContent);
+    taskContent.focus();
+
+    const taskFeedback = document.getElementById('task-feedback');
+    taskFeedback.textContent = 'Tarefa editada com sucesso.';
 }
 
 function appendInTaskList(task) {
     const taskList = document.getElementById('task-list');
 
-    const { taskItem, taskContent } = createTaskItem(task);
+    const { taskItem, taskContent, taskInput } = createTaskItem(task);
 
-    taskContent.addEventListener('keydown', (event) => editTaskContent(event, taskContent, task));
+    taskInput.addEventListener('keydown', (event) => editTask(event, taskContent, taskInput, task));
+
+    taskContent.addEventListener('keydown', (event) => {
+        if (event.key === 'Enter' || event.key === 'Space') {
+            taskContent.replaceWith(taskInput);
+            taskInput.focus();
+        }
+    });
+    taskContent.addEventListener('dblclick', () => {
+        taskContent.replaceWith(taskInput);
+        taskInput.focus();
+    });
+
     taskItem.appendChild(taskContent);
 
-    const removeButton = createRemoveButtonElement();
+    const removeButton = createRemoveButtonElement(task);
     removeButton.addEventListener('click', () => {
         removeTask(task.id);
-        updateRank(1)
+        updateRank(1);
     });
 
     taskItem.appendChild(removeButton);
@@ -54,14 +82,9 @@ function addTask(taskContent) {
     tasks.push(task);
     localStorage.setItem('tasks', JSON.stringify(tasks));
     appendInTaskList(task);
-}
 
-function popTask() {
-    const task = tasks.pop();
-    localStorage.setItem('tasks', JSON.stringify(tasks));
-
-    const taskList = document.getElementById('task-list');
-    taskList.removeChild(document.getElementById(task.id));
+    const taskFeedback = document.getElementById('task-feedback');
+    taskFeedback.textContent = 'Tarefa adicionada com sucesso.';
 }
 
 function removeTask(id) {
@@ -71,11 +94,18 @@ function removeTask(id) {
 
     const taskList = document.getElementById('task-list');
     taskList.removeChild(document.getElementById(id));
+
+    const taskFeedback = document.getElementById('task-feedback');
+    taskFeedback.textContent = 'Tarefa removida com sucesso.';
 }
 
 function setDataSetError(taskLength) {
     if (taskLength === 0) {
         taskBarInput.dataset.error = true;
+
+        taskBarInput.setAttribute('aria-invalid', 'true');
+        taskBarInput.setAttribute('aria-describedby', 'task-error');
+        document.getElementById('task-error').hidden = false;
 
         return true;
     }
@@ -83,19 +113,9 @@ function setDataSetError(taskLength) {
     return false;
 }
 
-function updateTask(newTask) {
-    const index = tasks.findIndex((task) => task.id === newTask.id);
-    tasks[index] = {
-        id: newTask.id,
-        content: newTask.content,
-    };
-    localStorage.setItem('tasks', JSON.stringify(tasks));
-}
-
 export {
     appendInTaskList,
     addTask,
-    popTask,
     removeTask,
     updateTask,
     setDataSetError,

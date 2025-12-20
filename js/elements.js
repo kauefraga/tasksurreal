@@ -7,21 +7,14 @@
  * I've created this because it's more readable for someone that will read codebase
  */
 
-function turnTaskContentEditable() {
-    this.contentEditable = 'plaintext-only';
-    this.focus();
-}
-
-function onTaskContentFocusOut() {
-    this.removeAttribute('contenteditable');
-}
-
-export function createRemoveButtonElement() {
+export function createRemoveButtonElement(task) {
     const removeButton = document.createElement('button');
     removeButton.classList.add('task-remove-button');
 
     removeButton.type = 'button';
     removeButton.textContent = 'remover';
+
+    removeButton.setAttribute('aria-label', `Remover tarefa: ${task.content}`);
 
     return removeButton;
 }
@@ -34,9 +27,14 @@ export function createTaskItem(task) {
     const taskContent = document.createElement('p');
     taskContent.classList.add('task-content');
     taskContent.textContent = task.content;
+    taskContent.setAttribute('tabindex', '0');
+    taskContent.setAttribute('aria-label', 'Editar tarefa');
 
-    taskContent.addEventListener('dblclick', turnTaskContentEditable);
-    taskContent.addEventListener('focusout', onTaskContentFocusOut);
+    const taskInput = document.createElement('input');
+    taskInput.classList.add('task-content');
+    taskInput.type = 'text';
+    taskInput.value = task.content;
+    taskInput.setAttribute('maxlength', '150');
 
-    return { taskItem, taskContent };
+    return { taskItem, taskContent, taskInput };
 }

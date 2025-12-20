@@ -33,14 +33,19 @@
                 ou <kbd title="Tecla para remover a última tarefa adicionada">backspace</kbd> com o campo vazio
             </label>
             <input id="task-bar" type="text" placeholder="Escovar os dentes, varrer a casa..." maxlength="150" />
-            <p id="hint">Você só pode ter 10 tarefas para fazer</p>
+
+            <p id="hint" role="status" aria-live="polite" aria-atomic="true">Você só pode ter 10 tarefas para
+                fazer</p>
+            <p id="task-error" role="alert" hidden>A tarefa não pode estar vazia</p>
         </div>
     </header>
 
     <main>
-        <ul id="task-list">
+        <ul id="task-list" aria-label="Lista de tarefas">
             <li id="tutorial-task-item">Conhecer o Tasksurreal: adicionar uma nova tarefa</li>
         </ul>
+
+        <div id="task-feedback" aria-live="polite" class="sr-only"></div>
 
         <section id="faq">
             <h2>FAQ</h2>

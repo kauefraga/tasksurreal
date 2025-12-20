@@ -1,5 +1,5 @@
 import { makeHintAppear } from './utils.js';
-import { addTask, popTask, setDataSetError, getTasksFromLocalStorage } from './task_utils.js';
+import { addTask, setDataSetError, getTasksFromLocalStorage } from './task_utils.js';
 
 const taskBarInput = document.getElementById('task-bar');
 
@@ -7,11 +7,6 @@ const taskBarInput = document.getElementById('task-bar');
 export function configTaskBarForInputs() {
     taskBarInput.addEventListener('keydown', (event) => {
         const newTask = String(event.target.value);
-
-        if (event.key === 'Backspace' && newTask.length === 0) {
-            popTask();
-            return;
-        }
 
         if (event.key !== 'Enter') return;
 
@@ -30,6 +25,9 @@ export function configTaskBarForInputs() {
     taskBarInput.addEventListener('input', () => {
         if (taskBarInput.dataset.error) {
             taskBarInput.dataset.error = false;
+
+            taskBarInput.setAttribute('aria-invalid', 'false');
+            document.getElementById('task-error').hidden = true;
         }
     });
 }
