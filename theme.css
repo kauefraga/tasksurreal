@@ -52,7 +52,7 @@ kbd {
 #rank-container {
     display: flex;
     flex-direction: row;
-    margin-bottom: 5;
+    margin-bottom: 6px;
 }
 
 #task-bar {
