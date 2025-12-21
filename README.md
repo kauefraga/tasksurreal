@@ -41,6 +41,21 @@ Muito bacana ver que mesmo sem um design extravagante o site consegue ser intuit
 
 Sobre o nome do projeto, no jogo Fortnite o ranque mais alto do competitivo é chamado de "surreal", cujo símbolo está ao lado do título. Quer ter uma produtividade surreal...?
 
+## Contribuidores
+
+Meus agradecimentos a essas pessoas incríveis por ajudarem a aprimorar o projeto:
+
+- [Shiro](https://github.com/shiroDev-br) (discord: shirors)
+
+### Como contribuir
+
+1. Faça um *fork* do projeto
+2. Clone seu *fork* na sua máquina
+3. Prepare o ambiente de desenvolvimento
+4. Faça as alterações e *commit* elas com [mensagens descritivas](https://www.conventionalcommits.org/pt-br/v1.0.0/)
+5. Sincronize as alterações com o repositório do seu *fork* (`git push`)
+6. Abra um *pull request* especificando o que você fez de forma geral (considerando que as alterações têm seus *commits* descritivos)
+
 ## Licença
 
 Este projeto está sob a licença MIT - Veja a [LICENÇA](LICENSE) para mais informações.
