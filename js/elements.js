@@ -1,13 +1,9 @@
 /*
-    File write by shirorsrs (discord) for the first time.
-*/
-
-/**
  * This file currently contains the creation of Remove Button and Task Item, but may contain any other element.
  * I've created this because it's more readable for someone that will read codebase
  */
 
-export function createRemoveButtonElement(task) {
+function createRemoveButtonElement(task) {
     const removeButton = document.createElement('button');
     removeButton.classList.add('task-remove-button');
 
@@ -19,7 +15,7 @@ export function createRemoveButtonElement(task) {
     return removeButton;
 }
 
-export function createTaskItem(task) {
+function createTaskItem(task) {
     const taskItem = document.createElement('li');
     taskItem.classList.add('task-item');
     taskItem.id = task.id;
@@ -38,3 +34,8 @@ export function createTaskItem(task) {
 
     return { taskItem, taskContent, taskInput };
 }
+
+export {
+    createRemoveButtonElement,
+    createTaskItem,
+};

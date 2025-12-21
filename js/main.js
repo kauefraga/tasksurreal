@@ -1,15 +1,8 @@
 import { setInitialImage, setInitialRank, setRankText } from './rank.js'
-import { appendInTaskList, getTasksFromLocalStorage } from './task_utils.js';
-import { configTaskBarForInputs } from './task_input.js';
-const tasks = getTasksFromLocalStorage();
+import { appendInTaskList, getTasksFromLocalStorage } from './task-utils.js';
+import { configTaskBarForInputs } from './task-input.js';
 
-document.addEventListener("DOMContentLoaded", () => {
-    mountTaskList(tasks);
-    configTaskBarForInputs();
-    setInitialRank();
-    setRankText();
-    setInitialImage();
-})
+const tasks = getTasksFromLocalStorage();
 
 function mountTaskList(tasks) {
     const tutorialTaskItem = document.getElementById('tutorial-task-item');
@@ -21,3 +14,11 @@ function mountTaskList(tasks) {
         appendInTaskList(task);
     }
 }
+
+document.addEventListener('DOMContentLoaded', () => {
+    mountTaskList(tasks);
+    configTaskBarForInputs();
+    setInitialRank();
+    setRankText();
+    setInitialImage();
+});

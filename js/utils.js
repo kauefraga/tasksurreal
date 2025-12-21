@@ -8,22 +8,24 @@ const repeatWithDelay = (fn, repetitions, delayInMs) => {
     return repeatWithDelay(fn, repetitions - 1, delayInMs);
 };
 
-function makeHintAppear(tasks) {
+function makeMaximumTasksHintAppear(tasks) {
     if (tasks.length < 10) return false;
 
     const hint = document.getElementById('hint');
-    hint.style.visibility = 'visible';
+    hint.hidden = false;
 
     repeatWithDelay(() => {
         hint.textContent += '.';
     }, 3, 1000);
 
     setTimeout(() => {
-        hint.style.visibility = 'hidden';
+        hint.hidden = true;
         hint.textContent = 'Você só pode ter 10 tarefas para fazer';
     }, 5000);
 
     return true;
 }
 
-export { makeHintAppear };
+export {
+    makeMaximumTasksHintAppear,
+};
