@@ -19,10 +19,13 @@ Conclua tarefas e acumule pontos para subir de ranque.
 
 > Cada tarefa concluída acrescenta um ponto
 
-1. 0 pontos = sem ranque
-2. 10 pontos = iniciante
-3. 50 pontos = avançado
-4. 100 pontos = surreal
+| Ranque     | Pontos |
+|------------|-------:|
+| Nenhum     | 0      |
+| Iniciante  | 5      |
+| Ascendente | 20     |
+| Avançado   | 50     |
+| Surreal    | 100    |
 
 ## O que ainda está por vir?
 
