@@ -11,6 +11,11 @@ body {
     color: rgb(255, 255, 255);
 }
 
+footer {
+    background-color: var(--neutral-label);
+    color: var(--divider-color);
+}
+
 /* Credits to https://pajasevi.github.io/CSSnowflakes/ */
 .snowflake {
     color: #fff;
