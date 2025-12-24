@@ -8,7 +8,7 @@ function createRemoveButtonElement(task) {
     removeButton.classList.add('task-remove-button');
 
     removeButton.type = 'button';
-    removeButton.textContent = 'remover';
+    removeButton.textContent = 'concluí';
 
     removeButton.setAttribute('aria-label', `Remover tarefa: ${task.content}`);
 
