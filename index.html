@@ -5,9 +5,9 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description"
-        content="Um gerenciador de tarefas mínimo, livre de distrações visuais e com foco na sua produtividade." />
-    <meta name="keywords" content="Produtividade, Lista de compras, to-do, to-do list" />
-    <title>Tasksurreal - Gerenciador de tarefas mínimo</title>
+        content="Uma lista de tarefas mínima, livre de distrações visuais e com foco na sua produtividade." />
+    <meta name="keywords" content="Produtividade, Lista, To-do, To-do list, Lista de compras" />
+    <title>Tasksurreal - Lista de tarefas mínima</title>
     <link rel="stylesheet" href="theme.css" />
     <link rel="icon" href="assets/unreal.webp" />
 </head>
@@ -47,78 +47,50 @@
 
         <div id="task-feedback" aria-live="polite" class="sr-only"></div>
 
-        <section id="faq">
-            <h2>FAQ</h2>
+        <details id="faq">
+            <summary>Dúvidas frequentes</summary>
 
-            <details>
-                <summary>Por que usar o Tasksurreal?</summary>
+            <p>A lista de tarefas leve e livre de distrações visuais. <b>Registre 10 tarefas</b>, complete uma para
+                poder adicionar mais. <b>Priorizar é chave.</b></p>
 
-                <p>O objetivo dele é ser mínimo, HTML, CSS e JavaScript puro. Sem framework, sem bibliotecas, sem
-                    animações, sem fonte personalizada, sem design mirabolante. <b>Apenas o necessário.</b></p>
-            </details>
+            <p>Comece adicionando uma tarefa na lista: preencha o campo e aperte <kbd>enter</kbd>. Tcharam!</p>
 
-            <details>
-                <summary>Qual é o diferencial de produtividade?</summary>
+            <p>Para editar clique duas vezes com o botão esquerdo do mouse em cima de uma tarefa criada.</p>
 
-                <p>Além da ausência de distrações visuais, o Tasksurreal limita a quantidade máxima de tarefas que você
-                    pode ter em 10. <b>Priorize.</b></p>
-            </details>
+            <p>Para remover clique no botão ao lado da tarefa que diz "concluí".</p>
 
-            <details>
-                <summary>Como usar?</summary>
+            <p>O sistema de pontuação te concede um ranque pela quantidade de tarefas que você já realizou. Cada
+                tarefa concluída acumula um ponto.</p>
 
-                <p>Comece adicionando uma tarefa na lista: preencha o campo e aperte <kbd>enter</kbd>. Tcharam!</p>
+            <table border="1">
+                <tr>
+                    <th>Pontos</th>
+                    <th>Ranque</th>
+                </tr>
+                <tr>
+                    <td>0</td>
+                    <td>Sem ranque</td>
+                </tr>
+                <tr>
+                    <td>5</td>
+                    <td>Iniciante</td>
+                </tr>
+                <tr>
+                    <td>20</td>
+                    <td>Ascendente</td>
+                </tr>
+                <tr>
+                    <td>50</td>
+                    <td>Avançado</td>
+                </tr>
+                <tr>
+                    <td>100</td>
+                    <td>Surreal</td>
+                </tr>
+            </table>
 
-                <p>Obrigado por usar o Tasksurreal ^^</p>
-            </details>
-
-            <details>
-                <summary>Como editar uma tarefa?</summary>
-
-                <p>Clique duas vezes com o botão esquerdo do mouse em cima de uma tarefa criada.</p>
-            </details>
-
-            <details>
-                <summary>Como remover uma tarefa?</summary>
-
-                <p>Clique no botão ao lado da tarefa que diz "remover". Outra opção é: entre no modo de edição, apague o
-                    que está escrito e aperte <kbd>enter</kbd>.</p>
-            </details>
-
-            <details>
-                <summary>Como funciona o sistema de pontos?</summary>
-
-                <p>O sistema de pontuação te concede um ranque pela quantidade de tarefas que você já realizou. Cada
-                    tarefa concluída acumula um ponto.</p>
-
-                <table border="1">
-                    <tr>
-                        <th>Pontos</th>
-                        <th>Ranque</th>
-                    </tr>
-                    <tr>
-                        <td>0</td>
-                        <td>Sem ranque</td>
-                    </tr>
-                    <tr>
-                        <td>5</td>
-                        <td>Iniciante</td>
-                    </tr>
-                    <tr>
-                        <td>20</td>
-                        <td>Ascendente</td>
-                    </tr>
-                    <tr>
-                        <td>50</td>
-                        <td>Avançado</td>
-                    </tr>
-                    <tr>
-                        <td>100</td>
-                        <td>Surreal</td>
-                    </tr>
-                </table>
-            </details>
-        </section>
+            <p>Obrigado por usar o Tasksurreal ^^</p>
+        </details>
     </main>
 
     <footer>
@@ -127,6 +99,7 @@
     </footer>
 
     <script type="module" src="./js/main.js"></script>
+    <script src="./js/christmas.js"></script>
 </body>
 
 </html>

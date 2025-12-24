@@ -3,6 +3,7 @@
     --kbd-bg: rgb(220, 220, 220);
     --error-hint: rgb(220, 20, 20);
     --divider-color: rgb(231, 231, 233);
+    --list-marker: rgb(0, 0, 0);
 }
 
 body {
@@ -96,7 +97,7 @@ kbd {
 
 .task-item::before {
     content: '';
-    background: #000000;
+    background: var(--list-marker);
     width: 6px;
     height: 6px;
     border-radius: 100%;
