@@ -1,10 +1,18 @@
 # Tasksurreal <img src="assets/unreal.webp" alt="Ícone do ranque Surreal do Fortnite" width="32" height="32" />
 
-Um gerenciador de tarefas mínimo, livre de distrações visuais e com foco na sua produtividade. 
+Uma lista de tarefas mínima, livre de distrações visuais e com foco na sua produtividade.
 
 Tasksurreal oferece uma to-do list que te incentiva a realizar seus afazeres por meio de um sistema de pontuação e te obriga a priorizar as atividades com uma limitação de tarefas.
 
 ![Página do Tasksurreal no estado inicial](docs/showcase-latest.png)
+
+<details>
+    <summary>Versão de Natal</summary>
+
+![Página do Tasksurreal no estado inicial, versão natalina](docs/showcase-xmas.png)
+
+</details>
+
 
 ## Por que usar o Tasksurreal?
 
