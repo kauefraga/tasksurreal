@@ -70,6 +70,30 @@ kbd {
     border: 1px solid var(--error-hint);
 }
 
+/* When user is in the beginner rank */
+#task-bar.rank1 {
+    outline-color: #AAA9AD;
+    border: 1px solid #AAA9AD;
+}
+
+/* When user is in the ascendant rank */
+#task-bar.rank2 {
+    outline-color: #D4AF37;
+    border: 1px solid #D4AF37;
+}
+
+/* When user is in the advanced rank */
+#task-bar.rank3 {
+    outline-color: #4EE2EC;
+    border: 1px solid #4EE2EC;
+}
+
+/* When user is in the surreal rank */
+#task-bar.rank4 {
+    outline-color: #6355D0;
+    border: 1px solid #6355D0;
+}
+
 #hint,
 #task-error {
     margin: 0;

@@ -1,4 +1,4 @@
-import { setInitialImage, setInitialRank, setRankText } from './rank.js'
+import { setInitialImage, setInitialRank, setRankText, setCssClass } from './rank.js'
 import { appendInTaskList, getTasksFromLocalStorage } from './task-utils.js';
 import { configTaskBarForInputs } from './task-input.js';
 
@@ -21,4 +21,5 @@ document.addEventListener('DOMContentLoaded', () => {
     setInitialRank();
     setRankText();
     setInitialImage();
+    setCssClass();
 });

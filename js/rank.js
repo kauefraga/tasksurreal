@@ -16,6 +16,13 @@ const assets = new Map([
     ['Surreal', 'assets/unreal.webp'],
 ]);
 
+const cssClasses = new Map([
+    ['Iniciante', 'rank1'],
+    ['Ascendente', 'rank2'],
+    ['Avançado', 'rank3'],
+    ['Surreal', 'rank4'],
+]);
+
 function setInitialRank() {
     const rank = localStorage.getItem('rank');
 
@@ -36,6 +43,14 @@ function setInitialImage() {
     if (!assetImage) return;
 
     rankAsset.setAttribute('src', assetImage);
+}
+
+function setCssClass(newRank = null) {
+    const taskInput = document.getElementById('task-bar');
+    const rank = newRank ?? JSON.parse(localStorage.getItem('rank'));
+
+    taskInput.classList.remove(...cssClasses.values());
+    taskInput.classList.add(cssClasses.get(rank.rank));
 }
 
 function setRankText(newRank = null) {
@@ -68,8 +83,9 @@ function updateRank(points) {
     localStorage.setItem('rank', JSON.stringify(updatedRank));
     updateRankImage(newRank);
     setRankText(updatedRank);
+    setCssClass(updatedRank);
 
     return newRank;
 }
 
-export { setInitialRank, updateRank, setRankText, setInitialImage };
+export { setInitialRank, updateRank, setRankText, setInitialImage, setCssClass };
