@@ -23,7 +23,7 @@ Tasksurreal oferece uma to-do list que te incentiva a realizar seus afazeres por
 
 ## Sistema de ranque
 
-Conclua tarefas e acumule pontos para subir de ranque.
+Conclua tarefas e acumule pontos para subir de ranque. Cada ranque conquistado modifica sua barra de criação de tarefas.
 
 > Cada tarefa concluída acrescenta um ponto
 
@@ -35,7 +35,9 @@ Conclua tarefas e acumule pontos para subir de ranque.
 | Avançado   | 50     |
 | Surreal    | 100    |
 
-## O que ainda está por vir?
+## O que ainda pode ser adicionado?
+
+Quer contribuir para o projeto? As adições abaixo são pertinentes:
 
 - Efeitos sonoros opcionais
 - Tema escuro 
